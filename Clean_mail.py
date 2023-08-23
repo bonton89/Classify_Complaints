@@ -98,7 +98,8 @@ def clean_pii(text):
         TextAnalyticsClient
     )
 
-   
+    
+    # Enter language service credentials
     credential = AzureKeyCredential("")
     endpoint=""      
     
