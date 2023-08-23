@@ -3,6 +3,7 @@ def get_sentiment(text):
     from azure.core.credentials import AzureKeyCredential
     from azure.ai.textanalytics import TextAnalyticsClient
 
+    # Enter language service credentials
     endpoint = ""
     key = ""
 
@@ -27,8 +28,11 @@ def sample_classify_document_single_label(document):
     from azure.core.credentials import AzureKeyCredential
     from azure.ai.textanalytics import TextAnalyticsClient
     
+    # Mention the project type and deployment name from azure custom model deployments
     project_name = ""
     deployment_name = ""
+    
+    # Enter language service credentials
     credential = AzureKeyCredential("")
     endpoint="" 
    
@@ -50,91 +54,7 @@ def sample_classify_document_single_label(document):
 
     return classification_result
 
-# Classify Complaints function
-def classify_complaints(text):
-    try:
-        # Calling the custom model
-        result = sample_classify_document_single_label([text])
-
-        # Checking condition for non complaints
-        if (dict(result.classifications[0])['category']=='Complaint'):
-
-            return "Complaint"
-
-        else:
-            # Calling sentiment model to check sentiment
-            score = get_sentiment([text])
-            # The the negative score is mode than .40 it will retirn complaint else non complaints
-            if (score[0].confidence_scores.negative>0.40):
-                return "Complaint"
-            else:
-                return "Non Complaint" 
-
-    except Exception as e: 
-        print("Exception occured. Error Details : \n",e)
-       
         
-        
-            
-# Classify Complaints function
-def classify_complaints_1(text):
-    try:
-        # Calling the custom model
-        result = sample_classify_document_single_label([text])
-
-        # Checking condition for non complaints
-        if (dict(result.classifications[0])['category']=='Complaint'):
-            # Calling sentiment model to check sentiment
-            score = get_sentiment(text)
-            # The the negative score is mode than negative 0.60 it will retirn complaint else non complaints
-            if (score[0].confidence_scores.negative>=0.50):
-                return "Complaint"
-            else:
-                return "Non Complaint"     
-
-        else:
-            # Calling sentiment model to check sentiment
-            score = get_sentiment([text])
-            # The the negative score is mode than .40 it will retirn complaint else non complaints
-            if (score[0].confidence_scores.negative>0.40):
-                return "Complaint"
-            else:
-                return "Non Complaint" 
-
-    except Exception as e: 
-        print("Exception occured. Error Details : \n",e)   
-        
-
-# Classify Complaints function
-def classify_complaints_2(text):
-    try:
-        # Calling the custom model
-        result = sample_classify_document_single_label([text])
-
-        # Checking condition for non complaints
-        if (dict(result.classifications[0])['category']=='Complaint'):
-            # Calling sentiment model to check sentiment
-            score = get_sentiment(text.capitalize())
-            # The the negative score is mode than negative 0.60 it will retirn complaint else non complaints
-            if (score[0].confidence_scores.negative>=0.50):
-                return "Complaint"
-            elif (score[0].confidence_scores.positive>=0.60):
-                return "Non Complaint"     
-            else:
-                return "Complaint"
-                
-
-        else:
-            # Calling sentiment model to check sentiment
-            score = get_sentiment([text])
-            # The the negative score is mode than .40 it will retirn complaint else non complaints
-            if (score[0].confidence_scores.negative>0.40):
-                return "Complaint"
-            else:
-                return "Non Complaint" 
-
-    except Exception as e: 
-        print("Exception occured. Error Details : \n",e)   
 
 # Classify Complaints function
 def classify_complaints_3(text):
